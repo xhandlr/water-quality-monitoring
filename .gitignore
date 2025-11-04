@@ -1,0 +1,185 @@
+# =================================
+# DEPENDENCIAS Y BUILD
+# =================================
+backend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp*
+.pnp.js
+*.tgz
+*.tar.gz
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# =================================
+# ENVIRONMENT VARIABLES Y CONFIGURACIONES SENSIBLES
+# =================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Credenciales de base de datos
+*-config.json
+*credentials*
+*secrets*
+
+# Configuración de MQTT con passwords
+*mqtt-config*
+*broker-config*
+
+# =================================
+# PLATFORMIO / ARDUINO (ESP32)
+# =================================
+.pio/
+.pioenvs/
+.piolibdeps/
+.piopackages/
+.vscode/.browse.c_cpp.db*
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+
+# Build outputs
+firmware/.pio/
+firmware/build/
+
+# =================================
+# IDE / EDITORES
+# =================================
+# VS Code
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# =================================
+# DOCKER
+# =================================
+docker/.env
+docker/data/
+docker/volumes/
+
+# =================================
+# BASE DE DATOS
+# =================================
+*.db
+*.sqlite
+*.sqlite3
+timescaledb/data/
+postgres_data/
+
+# =================================
+# LOGS
+# =================================
+*.log
+logs/
+yarn-lock.json
+package-lock.json
+
+# Logs de aplicaciones
+backend/logs/
+frontend/logs/
+
+# =================================
+# MACHINE LEARNING / PYTHON
+# =================================
+ml-engine/.ipynb_checkpoints/
+ml-engine/models/trained/
+ml-engine/models/__pycache__/
+ml-engine/data/raw/
+ml-engine/data/processed/
+*.joblib
+*.pkl
+*.pickle
+*.h5
+*.model
+
+# Jupyter
+.jupyter/
+
+# =================================
+# REACT / VITE BUILD
+# =================================
+frontend/dist/
+frontend/.vite/
+frontend/*.tsbuildinfo
+
+# =================================
+# TEST Y COVERAGE
+# =================================
+coverage/
+.nyc_output/
+*.lcov
+
+# =================================
+# SISTEMA OPERATIVO
+# =================================
+# Windows
+[Tt]humbs.db
+*[Dd]esktop.ini
+
+# Linux
+*~
+
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# =================================
+# ARCHIVOS TEMPORALES
+# =================================
+*.tmp
+*.temp
+.cache/
+.temp/
+
+# =================================
+# UPLOADS Y DATOS DE USUARIO
+# =================================
+uploads/
+tmp/
+temp/
+
+# =================================
+# SSL / CERTIFICADOS
+# =================================
+*.key
+*.cert
+*.pem
+*.crt
