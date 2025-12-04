@@ -116,8 +116,8 @@ class _DevicesPageState extends State<DevicesPage> {
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             color: device.isActive
-                                ? Colors.green.withOpacity(0.1)
-                                : Colors.grey.withOpacity(0.1),
+                                ? Colors.green.withValues(alpha: 0.1)
+                                : Colors.grey.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(

@@ -72,7 +72,7 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
                 gradient: LinearGradient(
                   colors: [
                     widget.reading.status.color,
-                    widget.reading.status.color.withOpacity(0.7),
+                    widget.reading.status.color.withValues(alpha: 0.7),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -80,7 +80,7 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: widget.reading.status.color.withOpacity(0.3),
+                    color: widget.reading.status.color.withValues(alpha: 0.3),
                     blurRadius: 15,
                     offset: const Offset(0, 8),
                   ),
@@ -109,7 +109,7 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -207,13 +207,13 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
                                     drawVerticalLine: true,
                                     getDrawingHorizontalLine: (value) {
                                       return FlLine(
-                                        color: Colors.grey.withOpacity(0.2),
+                                        color: Colors.grey.withValues(alpha: 0.2),
                                         strokeWidth: 1,
                                       );
                                     },
                                     getDrawingVerticalLine: (value) {
                                       return FlLine(
-                                        color: Colors.grey.withOpacity(0.2),
+                                        color: Colors.grey.withValues(alpha: 0.2),
                                         strokeWidth: 1,
                                       );
                                     },
@@ -260,7 +260,7 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
                                   borderData: FlBorderData(
                                     show: true,
                                     border: Border.all(
-                                      color: Colors.grey.withOpacity(0.2),
+                                      color: Colors.grey.withValues(alpha: 0.2),
                                     ),
                                   ),
                                   lineBarsData: [
@@ -273,7 +273,7 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
                                       belowBarData: BarAreaData(
                                         show: true,
                                         color: widget.reading.status.color
-                                            .withOpacity(0.2),
+                                            .withValues(alpha: 0.2),
                                       ),
                                     ),
                                   ],
@@ -394,7 +394,7 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, color: color, size: 28),

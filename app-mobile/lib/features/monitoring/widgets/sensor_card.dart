@@ -19,7 +19,7 @@ class SensorCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: reading.status.color.withOpacity(0.3),
+          color: reading.status.color.withValues(alpha: 0.3),
           width: 2,
         ),
       ),
@@ -38,7 +38,7 @@ class SensorCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: reading.status.color.withOpacity(0.1),
+                      color: reading.status.color.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(

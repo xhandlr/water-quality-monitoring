@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/alert.dart';
 import '../models/sensor_reading.dart';
+import '../widgets/alert_card.dart';
+import '../widgets/filter_selector.dart';
 
 class AlertsPage extends StatefulWidget {
   const AlertsPage({super.key});
@@ -114,18 +116,14 @@ class _AlertsPageState extends State<AlertsPage> {
       body: Column(
         children: [
           // Filtros
-          Container(
-            height: 60,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildFilterChip('Todos'),
-                _buildFilterChip('Crítico'),
-                _buildFilterChip('Precaución'),
-                _buildFilterChip('Normal'),
-              ],
-            ),
+          FilterSelector(
+            filters: const ['Todos', 'Crítico', 'Precaución', 'Normal'],
+            selectedFilter: _filterStatus,
+            onFilterSelected: (newStatus) {
+              setState(() {
+                _filterStatus = newStatus;
+              });
+            },
           ),
 
           // Lista de alertas
@@ -155,7 +153,10 @@ class _AlertsPageState extends State<AlertsPage> {
                     itemCount: _filteredAlerts.length,
                     itemBuilder: (context, index) {
                       final alert = _filteredAlerts[index];
-                      return _buildAlertCard(alert);
+                      return AlertCard(
+                        alert: alert,
+                        onTap: () => _showAlertDetail(alert),
+                      );
                     },
                   ),
           ),
@@ -186,150 +187,9 @@ class _AlertsPageState extends State<AlertsPage> {
     );
   }
 
-  Widget _buildFilterChip(String label) {
-    final isSelected = label == _filterStatus;
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: FilterChip(
-        selected: isSelected,
-        label: Text(label),
-        onSelected: (selected) {
-          setState(() {
-            _filterStatus = label;
-          });
-        },
-        selectedColor: Theme.of(context).primaryColor,
-        labelStyle: TextStyle(
-          color: isSelected ? Colors.white : Colors.black87,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
 
-  Widget _buildAlertCard(Alert alert) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: alert.isRead ? 1 : 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(
-          color: alert.isRead
-              ? Colors.grey.withOpacity(0.2)
-              : alert.severity.color.withOpacity(0.5),
-          width: alert.isRead ? 1 : 2,
-        ),
-      ),
-      child: InkWell(
-        onTap: () {
-          _showAlertDetail(alert);
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              // Icono de estado
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: alert.severity.color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  alert.icon,
-                  color: alert.severity.color,
-                  size: 28,
-                ),
-              ),
-              const SizedBox(width: 16),
 
-              // Información de la alerta
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          alert.sensorName,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: alert.isRead
-                                ? FontWeight.w600
-                                : FontWeight.bold,
-                          ),
-                        ),
-                        if (!alert.isRead) ...[
-                          const SizedBox(width: 8),
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                              color: Colors.red,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      alert.message,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(
-                          '${alert.value.toStringAsFixed(2)} ${alert.unit}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: alert.severity.color,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Icon(
-                          Icons.access_time,
-                          size: 14,
-                          color: Colors.grey[600],
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          _formatTimestamp(alert.timestamp),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
-  String _formatTimestamp(DateTime timestamp) {
-    final now = DateTime.now();
-    final difference = now.difference(timestamp);
-
-    if (difference.inMinutes < 60) {
-      return 'Hace ${difference.inMinutes} min';
-    } else if (difference.inHours < 24) {
-      return 'Hace ${difference.inHours} h';
-    } else {
-      return DateFormat('dd/MM/yyyy HH:mm').format(timestamp);
-    }
-  }
 
   void _showAlertDetail(Alert alert) {
     showDialog(
