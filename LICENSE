@@ -1,16 +1,51 @@
-MIT License
+Copyright (c) 2025 xhandlr
 
-Copyright (c) 2025 Camille
+ACADEMIC INTEGRITY NOTICE
+
+This project was developed as coursework for "Taller de Empresas Tecnológicas"
+at Universidad de La Frontera, 2025 academic year.
+
+Submitting this work as your own in the same course may constitute academic
+misconduct. Please consult your institution's academic integrity policies
+and obtain proper authorization before using this work in academic submissions.
+
+================================================================================
+
+LICENSE TERMS
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+in the Software, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. ATTRIBUTION
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+2. COMPETITION PROHIBITION
+   The Software SHALL NOT be used for participation in:
+   - Hackathons, coding competitions, or technology contests
+   - Innovation challenges or entrepreneurship competitions
+   - Any event where prizes, funding, or monetary compensation are awarded
+     based on submission of work incorporating this Software
+   - Academic coursework submissions where original work is required
+
+3. VISUAL ASSETS EXCLUSION
+   Visual assets including logos, designs, mockups, architecture diagrams,
+   and brand materials are excluded from this license and require separate
+   written authorization for any use.
+
+4. ACADEMIC USE RESTRICTION
+   While educational use is generally permitted, submitting this work as
+   original academic coursework in "Taller de Empresas Tecnológicas" or
+   similar entrepreneurship courses at Universidad de La Frontera constitutes
+   a violation of this license and university academic integrity policies.
+
+================================================================================
+
+DISCLAIMER
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,3 +54,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+
+For questions, authorization requests, or to report academic misconduct:
+c.elgueta04@ufromail.cl
