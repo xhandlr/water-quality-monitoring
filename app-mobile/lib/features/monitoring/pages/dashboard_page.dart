@@ -49,17 +49,6 @@ class _DashboardPageState extends State<DashboardPage> {
           maxThreshold: 30.0,
         ),
         SensorReading(
-          id: '3',
-          name: 'Oxígeno Disuelto',
-          value: 5.8,
-          unit: 'mg/L',
-          status: SensorStatus.good,
-          timestamp: DateTime.now(),
-          icon: Icons.air,
-          minThreshold: 5.0,
-          maxThreshold: 10.0,
-        ),
-        SensorReading(
           id: '4',
           name: 'Turbidez',
           value: 45.2,
@@ -80,17 +69,6 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icons.electric_bolt,
           minThreshold: 200,
           maxThreshold: 800,
-        ),
-        SensorReading(
-          id: '6',
-          name: 'Cloro Residual',
-          value: 1.2,
-          unit: 'mg/L',
-          status: SensorStatus.good,
-          timestamp: DateTime.now(),
-          icon: Icons.water,
-          minThreshold: 0.5,
-          maxThreshold: 2.0,
         ),
       ];
       _isLoading = false;

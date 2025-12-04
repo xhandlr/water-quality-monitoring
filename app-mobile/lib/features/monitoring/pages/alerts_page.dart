@@ -52,26 +52,6 @@ class _AlertsPageState extends State<AlertsPage> {
           unit: 'pH',
           isRead: true,
         ),
-        Alert(
-          id: '4',
-          sensorName: 'Oxígeno Disuelto',
-          message: 'Nivel bajo detectado',
-          severity: SensorStatus.warning,
-          timestamp: DateTime.now().subtract(const Duration(hours: 2)),
-          value: 5.1,
-          unit: 'mg/L',
-          isRead: true,
-        ),
-        Alert(
-          id: '5',
-          sensorName: 'Cloro Residual',
-          message: 'Nivel crítico bajo',
-          severity: SensorStatus.critical,
-          timestamp: DateTime.now().subtract(const Duration(hours: 3)),
-          value: 0.3,
-          unit: 'mg/L',
-          isRead: true,
-        ),
       ];
     });
   }

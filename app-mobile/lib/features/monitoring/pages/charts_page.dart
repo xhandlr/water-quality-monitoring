@@ -25,10 +25,8 @@ class _ChartsPageState extends State<ChartsPage> {
   final List<String> _sensors = [
     'pH',
     'Temperatura',
-    'Oxígeno Disuelto',
     'Turbidez',
     'Conductividad',
-    'Cloro Residual',
   ];
 
   // Datos simulados para gráficos

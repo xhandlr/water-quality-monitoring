@@ -52,16 +52,6 @@ class _SettingsPageState extends State<SettingsPage> {
       unit: '°C',
     ),
     ThresholdSetting(
-      sensorId: 'oxygen',
-      sensorName: 'Oxígeno Disuelto',
-      icon: Icons.air,
-      minWarning: 5.0,
-      maxWarning: 10.0,
-      minCritical: 3.0,
-      maxCritical: 12.0,
-      unit: 'mg/L',
-    ),
-    ThresholdSetting(
       sensorId: 'turbidity',
       sensorName: 'Turbidez',
       icon: Icons.water_drop,
