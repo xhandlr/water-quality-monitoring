@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="aurix/assets/global/banner-aurix.png" alt="Aurix Banner" width="100%"/>
+<img src="app-mobile/assets/global/banner-aurix.png" alt="Aurix Banner" width="100%"/>
 
 ### Sistema Inteligente de Monitoreo y Filtración de Agua IoT
 
@@ -75,7 +75,7 @@ Este proyecto implementa la **infraestructura de monitoreo IoT y software**, inc
 ## 🏗️ Arquitectura del Sistema
 
 <div align="center">
-<img src="aurix/assets/global/arquitecture-aurix.png" alt="Arquitectura Aurix" width="100%"/>
+<img src="app-mobile/assets/global/arquitecture-aurix.png" alt="Arquitectura Aurix" width="100%"/>
 </div>
 
 ---
@@ -114,7 +114,7 @@ Este proyecto implementa la **infraestructura de monitoreo IoT y software**, inc
 ## 📂 Estructura del Proyecto
 
 ```
-aurix/
+app-mobile/
 ├── android/                  # Configuración Android
 ├── ios/                      # Configuración iOS
 ├── assets/                   # Recursos estáticos
@@ -177,7 +177,7 @@ aurix/
 1. **Clonar el repositorio**
 ```bash
 git clone https://github.com/tu-usuario/water-quality-monitoring.git
-cd water-quality-monitoring/aurix
+cd water-quality-monitoring/app-mobile
 ```
 
 2. **Instalar dependencias**
