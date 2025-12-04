@@ -19,14 +19,27 @@
 
 ## 🎯 Descripción del Proyecto
 
-**Aurix** es una solución integral que combina hardware de filtración avanzada con software de monitoreo IoT, ofreciendo un **filtro inteligente** que permite visualizar métricas de calidad de agua en tiempo real a través de una aplicación móvil.
+**Aurix** es un proyecto académico desarrollado para "Taller de Empresas Tecnológicas" en la Universidad de La Frontera (2025), inspirado en las bases del concurso **Smart Temuco 2025**.
 
-### 🔬 Innovación Tecnológica
+### 💡 Contexto del Proyecto
 
-El filtro físico utiliza capas **micro-estratificadas** que combinan:
+El concepto original propone una solución integral que combina un **filtro físico microestratificado** con un **sistema de monitoreo IoT** para calidad de agua. Este repositorio desarrolla específicamente la **capa de software y monitoreo IoT** - la parte posterior al proceso de filtración.
+
+### 🔬 Sobre el Filtro (Concepto Base)
+
+El filtro físico propuesto utiliza capas **micro-estratificadas** que combinan:
 - **Biochar modificado** para adsorbción de contaminantes
 - **Nanopartículas de hierro de valencia cero (nZVI)** para remoción de metales pesados y contaminantes orgánicos
-- **Proceso químico patentado** que fija nZVI sobre biochar de mayor granulometría, permitiendo trabajar con sedimentos manejables a escala nanométrica
+- **Proceso químico** que fija nZVI sobre biochar de mayor granulometría
+
+### 💻 Desarrollo en Este Repositorio
+
+Este proyecto implementa la **infraestructura de monitoreo IoT y software**, incluyendo:
+- Sistema de adquisición de datos con sensores industriales
+- Transmisión MQTT a cloud (Azure IoT Hub)
+- Backend Node.js para procesamiento y almacenamiento
+- Aplicación móvil Flutter para visualización en tiempo real
+- Análisis predictivo con machine learning
 
 ---
 
@@ -341,27 +354,30 @@ Disponible después de **12 meses de datos históricos**:
 
 ---
 
-## 🤝 Contribución
-
-Las contribuciones son bienvenidas. Por favor:
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add: nueva característica'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
----
-
 ## 📝 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+⚠️ **AVISO DE INTEGRIDAD ACADÉMICA**
+
+Este proyecto fue desarrollado para "Taller de Empresas Tecnológicas" en la
+Universidad de La Frontera (2025). Presentar este trabajo como propio en el mismo curso puede constituir una falta de conducta académica. 
+
+Consulte las políticas de integridad académica de su institución y obtenga la autorización correspondiente antes de utilizar este trabajo en presentaciones académicas.
 
 ---
 
-## 👥 Equipo
+[![License: Custom](https://img.shields.io/badge/License-Custom-blue.svg)](LICENSE)
 
-Desarrollado con 💙 por el equipo Aurix
+Este proyecto utiliza una **licencia personalizada** que permite uso comercial 
+pero prohíbe específicamente participación en competiciones.
+
+### 📄 Detalles Completos
+Ver el archivo [LICENSE](LICENSE) para términos y condiciones completos.
+
+---
+
+## 👥 Autor
+
+Desarrollado con 💙 por [xhandlr](https://github.com/xhandlr)
 
 ---
 
@@ -369,8 +385,7 @@ Desarrollado con 💙 por el equipo Aurix
 
 ¿Preguntas? ¿Sugerencias? ¿Interesado en implementar Aurix?
 
-- 📧 Email: contacto@aurix.com
-- 🌐 Website: www.aurix.com
+- 🌐 Website: 
 - 📱 Demo: [Ver video demostrativo](#)
 
 ---
