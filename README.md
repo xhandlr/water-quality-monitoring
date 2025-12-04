@@ -8,8 +8,8 @@
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![Azure IoT](https://img.shields.io/badge/Azure_IoT-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/en-us/services/iot-hub/)
 [![MQTT](https://img.shields.io/badge/MQTT-660066?style=for-the-badge&logo=mqtt&logoColor=white)](https://mqtt.org)
+[![TimescaleDB](https://img.shields.io/badge/TimescaleDB-FDB515?style=for-the-badge&logo=timescale&logoColor=white)](https://www.timescale.com/)
 
 [Características](#-características-principales) • [Arquitectura](#-arquitectura-del-sistema) • [Instalación](#-instalación) • [Uso](#-uso)
 
@@ -21,11 +21,11 @@
 
 **Aurix** es un proyecto académico desarrollado para "Taller de Empresas Tecnológicas" en la Universidad de La Frontera (2025), inspirado en las bases del concurso **Smart Temuco 2025**.
 
-### 💡 Contexto del Proyecto
+### 💡 Contexto del Prototipo
 
 El concepto original propone una solución integral que combina un **filtro físico microestratificado** con un **sistema de monitoreo IoT** para calidad de agua. Este repositorio desarrolla específicamente la **capa de software y monitoreo IoT** - la parte posterior al proceso de filtración.
 
-### 🔬 Sobre el Filtro (Concepto Base)
+### 🔬 Sobre el Filtro
 
 El filtro físico propuesto utiliza capas **micro-estratificadas** que combinan:
 - **Biochar modificado** para adsorbción de contaminantes
@@ -35,11 +35,11 @@ El filtro físico propuesto utiliza capas **micro-estratificadas** que combinan:
 ### 💻 Desarrollo en Este Repositorio
 
 Este proyecto implementa la **infraestructura de monitoreo IoT y software**, incluyendo:
-- Sistema de adquisición de datos con sensores industriales
-- Transmisión MQTT a cloud (Azure IoT Hub)
+- Sistema de adquisición de datos con sensores básicos de prueba
+- Transmisión MQTT mediante broker Mosquitto
 - Backend Node.js para procesamiento y almacenamiento
 - Aplicación móvil Flutter para visualización en tiempo real
-- Análisis predictivo con machine learning
+- Base de datos TimescaleDB optimizada para series temporales
 
 ---
 
@@ -54,21 +54,21 @@ Este proyecto implementa la **infraestructura de monitoreo IoT y software**, inc
 - 🤖 **Detección de anomalías con ML** (disponible después de 12 meses de datos)
 
 ### 🌐 Monitoreo IoT
-- **4 sensores industriales** monitoreados:
+- **Sensores básicos** para prototipo:
   - 🧪 **pH** - Acidez/alcalinidad del agua
   - 🌫️ **Turbidez** - Claridad y partículas suspendidas
   - ⚡ **Conductividad eléctrica** - Contenido de sales disueltas
   - 💧 **Flujo** - Caudal de agua filtrada
-- 📡 Transmisión **MQTT** hacia Azure IoT Hub
+- 📡 Transmisión **MQTT** mediante broker Mosquitto
 - ⏱️ Muestreo configurable en tiempo real
-- 🔌 Montaje sobre infraestructura de bombeo existente
+- 🔌 Arquitectura escalable para sensores industriales
 
 ### 🧠 Backend Inteligente
 - 💾 **TimescaleDB** optimizada para series temporales
-- 🔄 Suscripción MQTT permanente al broker Azure
+- 🔄 Suscripción MQTT permanente al broker Mosquitto
 - 🌐 **API REST** con endpoints documentados
 - 📊 Agregaciones y reportes para auditorías
-- 🐍 **Módulo Python de ML** para detección predictiva de anomalías
+- 🐍 **Módulo Python de ML** para detección predictiva de anomalías (planificado)
 
 ---
 
@@ -104,10 +104,10 @@ Este proyecto implementa la **infraestructura de monitoreo IoT y software**, inc
 | Componente | Especificación |
 |------------|----------------|
 | **Microcontrolador** | ESP32 con WiFi |
-| **Sensores** | pH, Turbidez, Conductividad, Flujo (industriales) |
-| **Protocolo** | MQTT over TLS |
-| **Cloud** | Azure IoT Hub |
-| **Filtro** | Biochar + nZVI nano-estratificado |
+| **Sensores** | pH, Turbidez, Conductividad, Flujo (básicos para prototipo) |
+| **Protocolo** | MQTT |
+| **Broker** | Mosquitto |
+| **Filtro** | Biochar + nZVI nano-estratificado (concepto) |
 
 ---
 
