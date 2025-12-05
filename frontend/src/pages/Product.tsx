@@ -18,7 +18,7 @@ export const Product: React.FC = () => {
                  className="relative rounded-[2.5rem] w-full shadow-2xl z-10 border-4 border-white"
                  alt="Agricultura"
                />
-               <div className="absolute -bottom-6 -right-6 z-20 bg-white p-6 rounded-3xl shadow-xl animate-pulse">
+               <div className="absolute -bottom-6 -right-6 z-20 bg-white p-6 rounded-3xl shadow-xl">
                   <div className="flex items-center gap-3">
                     <span className="text-4xl">💧</span>
                     <div>
