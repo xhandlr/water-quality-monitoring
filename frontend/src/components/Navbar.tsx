@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               <img 
                 src={currentPage === 'monitoreo' && !scrolled ? logoDark : logo} 
                 alt="Aurix Logo" 
-                className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" 
+                className="h-10 w-auto transition-transform duration-300 group-hover:scale-105" 
               />
             </div>
           </div>
@@ -63,6 +63,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                   className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
                     currentPage === item.id
                       ? 'bg-aurix-blue text-white shadow-lg shadow-blue-200'
+                      : currentPage === 'monitoreo' && !scrolled
+                      ? 'text-white hover:bg-white/10'
                       : 'text-slate-600 hover:text-aurix-blue hover:bg-blue-50'
                   }`}
                 >
@@ -76,7 +78,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-aurix-dark hover:bg-gray-100 focus:outline-none"
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors ${
+                currentPage === 'monitoreo' && !scrolled
+                  ? 'text-white hover:bg-white/10'
+                  : 'text-aurix-dark hover:bg-gray-100'
+              }`}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>

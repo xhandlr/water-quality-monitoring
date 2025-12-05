@@ -1,5 +1,4 @@
 import React from 'react';
-import { AurixLogo } from '../components/Icons';
 import { Linkedin } from 'lucide-react';
 import members_template from '../assets/members.png';
 
@@ -18,9 +17,6 @@ export const About: React.FC = () => {
       
       {/* Header */}
       <div className="max-w-4xl mx-auto px-4 text-center mb-20">
-        <div className="flex justify-center mb-6">
-           <AurixLogo className="h-16 opacity-90" />
-        </div>
         <h1 className="text-4xl md:text-5xl font-heading font-bold text-aurix-dark mb-8">
             Ingeniería Chilena al servicio del agro
         </h1>

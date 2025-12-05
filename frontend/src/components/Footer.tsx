@@ -1,5 +1,5 @@
 import React from 'react';
-import { AurixLogo } from './Icons';
+import logo_dark from '../assets/logo_dark.png';
 import { Page } from '../../App';
 import { Mail, Phone } from 'lucide-react';
 
@@ -16,12 +16,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand */}
           <div className="col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <AurixLogo className="h-10 w-auto" />
-              <span className="font-bold text-xl">Aurix</span>
+              <img src={logo_dark} alt="Aurix Logo" className="h-10 w-auto" />
             </div>
-            <p className="text-gray-400 text-sm">
-              Purificando el futuro del agua para una agricultura sostenible y segura.
-            </p>
           </div>
 
           {/* Navigation */}
