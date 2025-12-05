@@ -79,7 +79,7 @@ export const Product: React.FC = () => {
             {/* Feature 2 */}
             <div className="bg-slate-50 p-8 rounded-3xl transition-all duration-300 hover:shadow-soft hover:-translate-y-1 group">
               <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-aurix-green transition-colors">
-                 <CheckIcon />
+                 <CheckIcon className="text-aurix-green group-hover:text-white transition-colors" />
               </div>
               <h3 className="text-xl font-heading font-bold text-slate-800 mb-3">Fácil Instalación</h3>
               <p className="text-slate-600 leading-relaxed">
