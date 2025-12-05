@@ -69,10 +69,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 relative">
+             <div className="w-full lg:w-1/2 relative">
                <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition duration-500">
                  <img 
-                   src={diagram} 
+                   src={diagram}
                    alt="Campo chileno limpio" 
                    className="w-full h-[500px] object-cover"
                  />
