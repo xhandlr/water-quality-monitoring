@@ -315,12 +315,7 @@ Disponible después de **12 meses de datos históricos**:
 - **Identificación de patrones estacionales** en la calidad del agua
 - **Alertas predictivas** antes de alcanzar niveles críticos
 - **Intervención preventiva** basada en desviaciones estadísticas
-
-### Algoritmos utilizados
-- Isolation Forest
-- LSTM para series temporales
-- Análisis de tendencias estacionales (SARIMA)
-
+- 
 ---
 
 ## 🗺️ Roadmap
@@ -378,15 +373,6 @@ Ver el archivo [LICENSE](LICENSE) para términos y condiciones completos.
 ## 👥 Autor
 
 Desarrollado con 💙 por [xhandlr](https://github.com/xhandlr)
-
----
-
-## 📞 Contacto
-
-¿Preguntas? ¿Sugerencias? ¿Interesado en implementar Aurix?
-
-- 🌐 Website: 
-- 📱 Demo: [Ver video demostrativo](#)
 
 ---
 
