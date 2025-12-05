@@ -45,9 +45,6 @@ export const Monitoring: React.FC = () => {
             <button className="bg-aurix-blue hover:bg-blue-600 text-white font-bold py-4 px-10 rounded-full shadow-lg shadow-blue-500/30 transition transform hover:-translate-y-1">
               Descargar App
             </button>
-            <button className="bg-transparent hover:bg-white/10 text-white border border-white/30 font-bold py-4 px-10 rounded-full transition">
-              Ver Demo Web
-            </button>
           </div>
         </div>
 
