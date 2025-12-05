@@ -1,15 +1,16 @@
 import React from 'react';
 import { AurixLogo } from '../components/Icons';
 import { Linkedin } from 'lucide-react';
+import members_template from '../assets/members.png';
 
 export const About: React.FC = () => {
   const team = [
-    { name: "Maira Huaiquiñir", role: "CEO", area: "Termo Fluidos", title: "Ing. Civil Mecánica", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop" },
-    { name: "Camille Elgueta", role: "CPO & CTO", area: "Producto & Tec", title: "Ing. Civil Informática", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&h=400&auto=format&fit=crop" },
-    { name: "Felipe Rios", role: "COO", area: "Hidráulica", title: "Ingeniería Civil", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=400&auto=format&fit=crop" },
-    { name: "Isidora Sierra", role: "CSO", area: "Ciencia Materiales", title: "Ing. Civil Química", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=400&auto=format&fit=crop" },
-    { name: "Nicolas Muñoz", role: "CIO", area: "Manejo IoT", title: "Ing. Civil Telemática", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&h=400&auto=format&fit=crop" },
-    { name: "Evelyn Stuardo", role: "Inv. Ambiental", area: "Área Ambiental", title: "Ing. Civil Ambiental", img: "https://images.unsplash.com/photo-1598550874175-4d7112ee750c?q=80&w=400&h=400&auto=format&fit=crop" },
+    { name: "Maira Huaiquiñir", role: "CEO", area: "Termo Fluidos", title: "Ing. Civil Mecánica", img: members_template },
+    { name: "Camille Elgueta", role: "CPO & CTO", area: "Producto & Tec", title: "Ing. Civil Informática", img: members_template },
+    { name: "Felipe Rios", role: "COO", area: "Hidráulica", title: "Ingeniería Civil", img: members_template },
+    { name: "Isidora Sierra", role: "CSO", area: "Ciencia Materiales", title: "Ing. Civil Química", img: members_template },
+    { name: "Nicolas Muñoz", role: "CIO", area: "Manejo IoT", title: "Ing. Civil Telemática", img: members_template },
+    { name: "Evelyn Stuardo", role: "Inv. Ambiental", area: "Área Ambiental", title: "Ing. Civil Ambiental", img: members_template },
   ];
 
   return (
