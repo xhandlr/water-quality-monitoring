@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckIcon } from '../components/Icons';
 import { ShieldCheck, Filter, Activity, Check } from 'lucide-react';
+import agriculture from '../assets/agriculture.avif';
 
 export const Product: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ export const Product: React.FC = () => {
              <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-aurix-blue to-aurix-green rounded-[3rem] opacity-30 blur-lg"></div>
                 <img 
-                 src="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=2574&auto=format&fit=crop"
+                 src={agriculture}
                  className="relative rounded-[2.5rem] w-full shadow-2xl z-10 border-4 border-white"
                  alt="Agricultura"
                />
