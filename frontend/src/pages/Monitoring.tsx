@@ -65,7 +65,7 @@ export const Monitoring: React.FC = () => {
                               <span className="font-heading font-bold">Aurix Mobile</span>
                               <div className="w-8 h-8 rounded-full bg-aurix-blue/50"></div>
                            </div>
-                           <h2 className="text-2xl font-bold text-white">Hola, Felipe</h2>
+                           <h2 className="text-2xl font-bold text-white">¡Hola!</h2>
                            <p className="text-blue-200 text-sm">Tu campo está protegido.</p>
                         </div>
 

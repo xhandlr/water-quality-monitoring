@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { AurixLogo } from './Icons';
 import { Page } from '../../App';
 import { Menu, X } from 'lucide-react';
+import logo from '../assets/logo.png';
+import logoDark from '../assets/logo_dark.png';
 
 interface NavbarProps {
   currentPage: Page;
@@ -44,7 +45,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           {/* Logo */}
           <div className="flex-shrink-0 cursor-pointer group" onClick={() => handleNav('inicio')}>
             <div className="flex items-center gap-2">
-              <AurixLogo className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" />
+              <img 
+                src={currentPage === 'monitoreo' && !scrolled ? logoDark : logo} 
+                alt="Aurix Logo" 
+                className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" 
+              />
             </div>
           </div>
           
