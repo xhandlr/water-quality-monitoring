@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Aurix necesita acceso a la cámara para escanear códigos QR de dispositivos.</string>
 </dict>
 </plist>
