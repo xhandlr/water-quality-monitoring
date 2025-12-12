@@ -59,6 +59,16 @@ class AppColors {
   
   // Specific Sensor Colors
   static const Color turbidezCritical = Color(0xFFF15858);
+
+  // Conductivity (Orange)
+  static const Color conductivityIcon = Color(0xFFF57C00);
+  static const Color conductivityBg = Color(0xFFFFF3E0);
+  static const Color conductivityBorder = Color(0xFFFFE0B2);
+
+  // Flow (Celeste/Light Blue)
+  static const Color flowIcon = Color(0xFF009EE3);
+  static const Color flowBg = Color(0xFFE1F5FE);
+  static const Color flowBorder = Color(0xFFB3E5FC);
 }
 
 class AppTheme {

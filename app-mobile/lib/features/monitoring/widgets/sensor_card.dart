@@ -24,6 +24,14 @@ class SensorCard extends StatelessWidget {
       iconColor = AppColors.turbidezCritical;
       iconBgColor = AppColors.statusCriticalBg;
       iconBorderColor = AppColors.statusCriticalBorder;
+    } else if (reading.name == 'Conductividad') {
+      iconColor = AppColors.conductivityIcon;
+      iconBgColor = AppColors.conductivityBg;
+      iconBorderColor = AppColors.conductivityBorder;
+    } else if (reading.name == 'Flujo') {
+      iconColor = AppColors.flowIcon;
+      iconBgColor = AppColors.flowBg;
+      iconBorderColor = AppColors.flowBorder;
     } else {
       switch (reading.status) {
         case SensorStatus.good:
