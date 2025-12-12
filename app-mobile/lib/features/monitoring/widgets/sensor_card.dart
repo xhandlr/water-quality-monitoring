@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:aurix/core/config/theme.dart';
 import '../models/sensor_reading.dart';
-import 'package:intl/intl.dart';
 
 class SensorCard extends StatelessWidget {
   final SensorReading reading;
@@ -14,142 +14,149 @@ class SensorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Definir colores según el estado
+    Color iconColor;
+    Color iconBgColor;
+    Color iconBorderColor;
+
+    // Override para Turbidez si es crítico
+    if (reading.name == 'Turbidez' && reading.status == SensorStatus.critical) {
+      iconColor = AppColors.turbidezCritical;
+      iconBgColor = AppColors.statusCriticalBg;
+      iconBorderColor = AppColors.statusCriticalBorder;
+    } else {
+      switch (reading.status) {
+        case SensorStatus.good:
+          iconColor = AppColors.statusNormalIcon;
+          iconBgColor = AppColors.statusNormalBg;
+          iconBorderColor = AppColors.statusNormalBorder;
+          break;
+        case SensorStatus.warning:
+          iconColor = AppColors.statusWarningIcon;
+          iconBgColor = AppColors.statusWarningBg;
+          iconBorderColor = AppColors.statusWarningBorder;
+          break;
+        case SensorStatus.critical:
+          iconColor = AppColors.statusCriticalIcon;
+          iconBgColor = AppColors.statusCriticalBg;
+          iconBorderColor = AppColors.statusCriticalBorder;
+          break;
+      }
+    }
+
     return Card(
-      elevation: 4,
+      elevation: 0,
+      color: Colors.white,
+      surfaceTintColor: Colors.transparent, // Evitar tinte grisáceo en M3
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: reading.status.color.withValues(alpha: 0.3),
-          width: 2,
+        side: const BorderSide(
+          color: AppColors.tagBorder,
+          width: 1,
         ),
       ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: reading.status.color.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(10),
+                      color: iconBgColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: iconBorderColor),
                     ),
                     child: Icon(
                       reading.icon,
-                      color: reading.status.color,
-                      size: 22,
+                      color: iconColor,
+                      size: 28,
                     ),
                   ),
-                  Flexible(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: iconColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
                       ),
-                      decoration: BoxDecoration(
-                        color: reading.status.color,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        reading.statusText,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
+                      boxShadow: [
+                        BoxShadow(
+                          color: iconColor.withValues(alpha: 0.4),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
                         ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const Spacer(),
+              // Gráfico simple de historial
+              SizedBox(
+                height: 24,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: List.generate(12, (index) {
+                    // Simulación de datos históricos
+                    final height = 4.0 + (index * index * 37 % 16);
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 1.5),
+                        child: Container(
+                          height: height,
+                          decoration: BoxDecoration(
+                            color: iconColor.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+              const SizedBox(height: 12),
               Text(
                 reading.name,
-                style: const TextStyle(
-                  fontSize: 13,
+                style: TextStyle(
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 6),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  reading.formattedValue,
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: reading.status.color,
-                  ),
+                  color: Colors.grey[700],
                 ),
               ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  Icon(
-                    Icons.access_time,
-                    size: 12,
-                    color: Colors.grey[600],
-                  ),
-                  const SizedBox(width: 3),
-                  Expanded(
-                    child: Text(
-                      DateFormat('HH:mm').format(reading.timestamp),
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey[600],
+              const SizedBox(height: 4),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: reading.value.toString(),
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black,
+                        height: 1.0,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              LinearProgressIndicator(
-                value: (reading.value - reading.minThreshold) /
-                    (reading.maxThreshold - reading.minThreshold),
-                backgroundColor: Colors.grey[200],
-                color: reading.status.color,
-                minHeight: 4,
-                borderRadius: BorderRadius.circular(2),
-              ),
-              const SizedBox(height: 3),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Min: ${reading.minThreshold}',
+                    TextSpan(
+                      text: ' ${reading.unit}',
                       style: TextStyle(
-                        fontSize: 9,
-                        color: Colors.grey[600],
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[500],
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Max: ${reading.maxThreshold}',
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: Colors.grey[600],
-                      ),
-                      textAlign: TextAlign.right,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

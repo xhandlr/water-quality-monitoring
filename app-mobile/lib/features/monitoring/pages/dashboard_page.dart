@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aurix/core/config/theme.dart';
 import '../models/sensor_reading.dart';
 import '../widgets/sensor_card.dart';
 
@@ -33,20 +34,9 @@ class _DashboardPageState extends State<DashboardPage> {
           unit: 'pH',
           status: SensorStatus.good,
           timestamp: DateTime.now(),
-          icon: Icons.science,
+          icon: Icons.science_outlined,
           minThreshold: 6.5,
           maxThreshold: 8.5,
-        ),
-        SensorReading(
-          id: '2',
-          name: 'Temperatura',
-          value: 28.5,
-          unit: '°C',
-          status: SensorStatus.warning,
-          timestamp: DateTime.now(),
-          icon: Icons.thermostat,
-          minThreshold: 15.0,
-          maxThreshold: 30.0,
         ),
         SensorReading(
           id: '4',
@@ -60,13 +50,24 @@ class _DashboardPageState extends State<DashboardPage> {
           maxThreshold: 50,
         ),
         SensorReading(
+          id: '2',
+          name: 'Flujo',
+          value: 28.5,
+          unit: 'L/min',
+          status: SensorStatus.warning,
+          timestamp: DateTime.now(),
+          icon: Icons.waves,
+          minThreshold: 15.0,
+          maxThreshold: 30.0,
+        ),
+        SensorReading(
           id: '5',
           name: 'Conductividad',
           value: 520,
           unit: 'µS/cm',
           status: SensorStatus.good,
           timestamp: DateTime.now(),
-          icon: Icons.electric_bolt,
+          icon: Icons.bolt,
           minThreshold: 200,
           maxThreshold: 800,
         ),
@@ -92,29 +93,66 @@ class _DashboardPageState extends State<DashboardPage> {
         .length;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Monitoreo de Calidad del Agua'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.pushNamed(context, '/alerts');
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-        ],
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: _refreshData,
-              child: CustomScrollView(
-                slivers: [
+      body: SafeArea(
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : RefreshIndicator(
+                onRefresh: _refreshData,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 48, 16, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Bienvenido de nuevo,',
+                                  style: TextStyle(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                const Text(
+                                  'Dashboard',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w900,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.white,
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.shadow,
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: const CircleAvatar(
+                                radius: 24,
+                                backgroundColor: Colors.grey,
+                                child: Icon(Icons.person, color: AppColors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   // Header con resumen de estado
                   SliverToBoxAdapter(
                     child: Container(
@@ -122,14 +160,19 @@ class _DashboardPageState extends State<DashboardPage> {
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF1E88E5), Color(0xFF42A5F5)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.gradientStart,
+                            AppColors.gradientMiddle,
+                            AppColors.gradientEnd,
+                          ],
+                          stops: [0.0, 0.5, 1.0],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
                         ),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.blue.withValues(alpha: 0.3),
+                            color: AppColors.gradientMiddle.withValues(alpha: 0.3),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),
@@ -138,35 +181,74 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Estado General del Sistema',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Estado del Sistema',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.tagBackground,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppColors.tagBorder,
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Tiempo real',
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               _buildStatusIndicator(
-                                'Normal',
+                                'NORMAL',
                                 goodCount,
-                                SensorStatus.good.color,
-                                Icons.check_circle,
+                                AppColors.statusNormalIcon,
+                                AppColors.statusNormalDashboardBg,
+                                Icons.check_circle_outline,
+                              ),
+                              Container(
+                                height: 40,
+                                width: 1,
+                                color: AppColors.white.withValues(alpha: 0.1),
                               ),
                               _buildStatusIndicator(
-                                'Precaución',
+                                'ALERTA',
                                 warningCount,
-                                SensorStatus.warning.color,
-                                Icons.warning,
+                                AppColors.statusWarningIcon,
+                                AppColors.statusWarningDashboardBg,
+                                Icons.warning_amber_rounded,
+                              ),
+                              Container(
+                                height: 40,
+                                width: 1,
+                                color: AppColors.white.withValues(alpha: 0.1),
                               ),
                               _buildStatusIndicator(
-                                'Crítico',
+                                'CRITICO',
                                 criticalCount,
-                                SensorStatus.critical.color,
-                                Icons.error,
+                                AppColors.statusCriticalIcon,
+                                AppColors.statusCriticalDashboardBg,
+                                Icons.error_outline,
                               ),
                             ],
                           ),
@@ -176,12 +258,25 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
 
                   // Grid de tarjetas de sensores
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: const Text(
+                        'Métricas en tiempo real',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ),
+                  ),
                   SliverPadding(
                     padding: const EdgeInsets.all(16),
                     sliver: SliverGrid(
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.75,
+                        childAspectRatio: 0.85,
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
                       ),
@@ -206,39 +301,42 @@ class _DashboardPageState extends State<DashboardPage> {
                 ],
               ),
             ),
+      ),
     );
   }
 
   Widget _buildStatusIndicator(
     String label,
     int count,
-    Color color,
+    Color iconColor,
+    Color backgroundColor,
     IconData icon,
   ) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            color: backgroundColor,
+            shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: color, size: 28),
+          child: Icon(icon, color: iconColor, size: 24),
         ),
         const SizedBox(height: 8),
         Text(
           count.toString(),
           style: const TextStyle(
-            fontSize: 24,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.white,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.white70,
+          style: TextStyle(
+            fontSize: 10,
+            color: AppColors.white.withValues(alpha: 0.7),
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

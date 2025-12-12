@@ -37,12 +37,12 @@ class _AlertsPageState extends State<AlertsPage> {
         ),
         Alert(
           id: '2',
-          sensorName: 'Temperatura',
-          message: 'Temperatura por encima del umbral',
+          sensorName: 'Flujo',
+          message: 'Flujo por encima del umbral',
           severity: SensorStatus.warning,
           timestamp: DateTime.now().subtract(const Duration(minutes: 15)),
           value: 29.2,
-          unit: '°C',
+          unit: 'L/min',
         ),
         Alert(
           id: '3',

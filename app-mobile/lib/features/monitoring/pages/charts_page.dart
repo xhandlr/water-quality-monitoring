@@ -17,7 +17,7 @@ class _ChartsPageState extends State<ChartsPage> {
 
   final List<String> _sensors = [
     'pH',
-    'Temperatura',
+    'Flujo',
     'Turbidez',
     'Conductividad',
   ];

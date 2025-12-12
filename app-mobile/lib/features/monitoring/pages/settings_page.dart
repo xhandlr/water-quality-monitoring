@@ -42,14 +42,14 @@ class _SettingsPageState extends State<SettingsPage> {
       unit: 'pH',
     ),
     ThresholdSetting(
-      sensorId: 'temp',
-      sensorName: 'Temperatura',
-      icon: Icons.thermostat,
+      sensorId: 'flow',
+      sensorName: 'Flujo',
+      icon: Icons.waves,
       minWarning: 15.0,
       maxWarning: 30.0,
       minCritical: 10.0,
       maxCritical: 35.0,
-      unit: '°C',
+      unit: 'L/min',
     ),
     ThresholdSetting(
       sensorId: 'turbidity',
