@@ -43,6 +43,9 @@ dependencies:
 
   # HTTP client for API calls
   http: ^1.2.0
+  
+  # Google Fonts
+  google_fonts: ^6.3.3
 
 dev_dependencies:
   flutter_test:

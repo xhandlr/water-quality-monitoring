@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Water Quality Monitoring',
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light, // Forzar modo claro para evitar fondo negro en dispositivos con modo oscuro
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) {
