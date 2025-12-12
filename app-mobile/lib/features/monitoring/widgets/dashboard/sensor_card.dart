@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aurix/core/config/theme.dart';
-import '../models/sensor_reading.dart';
+import '../../models/sensor_reading.dart';
 
 class SensorCard extends StatelessWidget {
   final SensorReading reading;

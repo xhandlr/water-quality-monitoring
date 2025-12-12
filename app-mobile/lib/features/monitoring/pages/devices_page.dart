@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:aurix/core/config/theme.dart';
-import '../widgets/device_card.dart';
-import '../widgets/device_config_modal.dart';
-import '../widgets/add_device_dialog.dart';
+import '../widgets/devices/device_card.dart';
+import '../widgets/devices/device_config_modal.dart';
+import '../widgets/devices/add_device_dialog.dart';
 
 class Device {
   final String id;
@@ -126,9 +126,11 @@ class _DevicesPageState extends State<DevicesPage> {
   }
 
   void _showAddDeviceDialog() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => const AddDeviceDialog(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const AddDeviceModal(),
     );
   }
 }

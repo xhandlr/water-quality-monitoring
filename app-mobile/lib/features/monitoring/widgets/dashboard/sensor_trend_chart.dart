@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../models/sensor_reading.dart';
-import 'time_range_selector.dart';
+import '../../models/sensor_reading.dart';
+import '../time_range_selector.dart';
 
 class SensorTrendChart extends StatelessWidget {
   final List<FlSpot> dataPoints;

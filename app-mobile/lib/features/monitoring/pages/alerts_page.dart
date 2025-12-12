@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/alert.dart';
 import '../models/sensor_reading.dart';
-import '../widgets/alert_card.dart';
+import '../widgets/dashboard/alert_card.dart';
 import '../widgets/filter_selector.dart';
 
 class AlertsPage extends StatefulWidget {

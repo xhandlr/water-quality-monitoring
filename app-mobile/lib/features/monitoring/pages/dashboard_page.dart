@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aurix/core/config/theme.dart';
 import '../models/sensor_reading.dart';
-import '../widgets/sensor_card.dart';
+import '../widgets/dashboard/sensor_card.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});

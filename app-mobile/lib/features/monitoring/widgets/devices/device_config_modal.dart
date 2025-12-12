@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aurix/core/config/theme.dart';
-import '../pages/devices_page.dart'; // For Device model
+import '../../pages/devices_page.dart'; // For Device model
 
 class DeviceConfigModal extends StatelessWidget {
   final Device device;

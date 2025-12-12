@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../widgets/filter_selector.dart';
 import '../widgets/time_range_selector.dart';
-import '../widgets/sensor_trend_chart.dart';
+import '../widgets/dashboard/sensor_trend_chart.dart';
 
 class ChartsPage extends StatefulWidget {
   const ChartsPage({super.key});
