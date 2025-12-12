@@ -111,20 +111,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               children: [
                                 Text(
                                   'Bienvenido de nuevo,',
-                                  style: TextStyle(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text(
+                                Text(
                                   'Dashboard',
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w900,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.headlineMedium,
                                 ),
                               ],
                             ),
@@ -261,13 +253,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: const Text(
+                      child: Text(
                         'Métricas en tiempo real',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                   ),

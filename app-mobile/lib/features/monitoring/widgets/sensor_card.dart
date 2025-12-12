@@ -136,11 +136,7 @@ class SensorCard extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 reading.name,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[700],
-                ),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 4),
               RichText(
@@ -148,20 +144,11 @@ class SensorCard extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: reading.value.toString(),
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black,
-                        height: 1.0,
-                      ),
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     TextSpan(
                       text: ' ${reading.unit}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey[500],
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
                 ),

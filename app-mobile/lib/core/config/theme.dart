@@ -74,7 +74,38 @@ class AppColors {
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.background,
-    textTheme: GoogleFonts.poppinsTextTheme(),
+    textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+      // Títulos Grandes (Dashboard, Valores de Sensores)
+      headlineLarge: GoogleFonts.poppins(
+        fontSize: 32,
+        fontWeight: FontWeight.w700, // Bold
+        color: AppColors.textPrimary,
+        height: 1.0,
+      ),
+      headlineMedium: GoogleFonts.poppins(
+        fontSize: 28,
+        fontWeight: FontWeight.w800, // ExtraBold
+        color: AppColors.textPrimary,
+      ),
+      // Subtítulos de Sección
+      titleLarge: GoogleFonts.poppins(
+        fontSize: 18,
+        fontWeight: FontWeight.w700, // Bold
+        color: AppColors.textPrimary,
+      ),
+      // Nombres de Sensores / Títulos de Tarjetas
+      titleMedium: GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w600, // SemiBold
+        color: AppColors.textSecondary,
+      ),
+      // Texto secundario / Unidades
+      bodyMedium: GoogleFonts.poppins(
+        fontSize: 14,
+        fontWeight: FontWeight.w600, // SemiBold
+        color: AppColors.textSecondary,
+      ),
+    ),
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       brightness: Brightness.light,
