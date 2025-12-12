@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aurix/core/config/theme.dart';
 
 class Device {
   final String id;
@@ -62,20 +63,37 @@ class _DevicesPageState extends State<DevicesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mis Dispositivos'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _showAddDeviceDialog,
-            tooltip: 'Agregar dispositivo',
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: _devices.length,
-        itemBuilder: (context, index) {
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 48, 16, 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Mis dispositivos',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.add, color: AppColors.white),
+                      onPressed: _showAddDeviceDialog,
+                      tooltip: 'Agregar dispositivo',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: _devices.length,
+                itemBuilder: (context, index) {
           final device = _devices[index];
           final isSelected = device.id == _selectedDeviceId;
 
@@ -268,6 +286,10 @@ class _DevicesPageState extends State<DevicesPage> {
             ),
           );
         },
+      ),
+            ),
+          ],
+        ),
       ),
     );
   }
