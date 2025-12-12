@@ -94,86 +94,90 @@ class _DevicesPageState extends State<DevicesPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: _devices.length,
                 itemBuilder: (context, index) {
-          final device = _devices[index];
-          final isSelected = device.id == _selectedDeviceId;
+                  final device = _devices[index];
+                  final isSelected = device.id == _selectedDeviceId;
+                  final statusColor = device.isActive ? AppColors.deviceOnline : AppColors.deviceOffline;
+                  final statusBg = device.isActive ? AppColors.deviceOnlineBg : AppColors.deviceOfflineBg;
 
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            elevation: isSelected ? 8 : 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: BorderSide(
-                color: isSelected
-                    ? Theme.of(context).primaryColor
-                    : Colors.transparent,
-                width: 2,
-              ),
-            ),
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _selectedDeviceId = device.id;
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Dispositivo seleccionado: ${device.name}'),
-                    behavior: SnackBarBehavior.floating,
-                    duration: const Duration(seconds: 2),
-                  ),
-                );
-              },
-              borderRadius: BorderRadius.circular(16),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: device.isActive
-                                ? Colors.green.withValues(alpha: 0.1)
-                                : Colors.grey.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            Icons.router,
-                            color: device.isActive ? Colors.green : Colors.grey,
-                            size: 32,
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            left: BorderSide(
+                              color: statusColor,
+                              width: 6,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: statusBg,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Icon(
+                                      Icons.router,
+                                      color: statusColor,
+                                      size: 24,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
                                   Expanded(
-                                    child: Text(
-                                      device.name,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          device.name,
+                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          device.location,
+                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   if (isSelected)
                                     Container(
                                       padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 4,
+                                        horizontal: 12,
+                                        vertical: 6,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(12),
+                                        color: AppColors.deviceBadgeBg,
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: const Text(
                                         'Activo',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.deviceBadgeText,
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -181,112 +185,79 @@ class _DevicesPageState extends State<DevicesPage> {
                                     ),
                                 ],
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 16),
+                              const Divider(height: 1, thickness: 1, color: Color(0xFFF3F4F6)),
+                              const SizedBox(height: 16),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    size: 14,
-                                    color: Colors.grey[600],
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Expanded(
-                                    child: Text(
-                                      device.location,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[600],
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 8,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          color: statusColor,
+                                          shape: BoxShape.circle,
+                                        ),
                                       ),
-                                    ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        device.isActive ? 'En línea' : 'Desconectado',
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: statusColor,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.sync,
+                                        size: 16,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        _formatLastSync(device.lastSync),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
+                              ),
+                              const SizedBox(height: 16),
+                              SizedBox(
+                                width: double.infinity,
+                                child: OutlinedButton(
+                                  onPressed: () => _showConfigDeviceDialog(device),
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(color: AppColors.primary),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                  ),
+                                  child: const Text(
+                                    'Configurar Dispositivo',
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Divider(),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 8,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                color: device.isActive
-                                    ? Colors.green
-                                    : Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              device.isActive ? 'En línea' : 'Desconectado',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.sync,
-                              size: 14,
-                              color: Colors.grey[600],
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              _formatLastSync(device.lastSync),
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    if (!isSelected) ...[
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              _selectedDeviceId = device.id;
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    'Cambiado a: ${device.name}'),
-                                behavior: SnackBarBehavior.floating,
-                                duration: const Duration(seconds: 2),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.check_circle_outline),
-                          label: const Text('Seleccionar este dispositivo'),
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                        ),
                       ),
-                    ],
-                  ],
-                ),
+                    ),
+                  );
+                },
               ),
-            ),
-          );
-        },
-      ),
             ),
           ],
         ),
@@ -303,6 +274,126 @@ class _DevicesPageState extends State<DevicesPage> {
     } else {
       return 'Hace ${difference.inDays} días';
     }
+  }
+
+  void _showConfigDeviceDialog(Device device) {
+    final statusColor = device.isActive ? AppColors.deviceOnline : AppColors.deviceOffline;
+    final statusBg = device.isActive ? AppColors.deviceOnlineBg : AppColors.deviceOfflineBg;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: statusBg,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.router,
+                    color: statusColor,
+                    size: 32,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        device.name,
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        device.location,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+                if (device.isActive)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.deviceBadgeBg,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      'Activo',
+                      style: TextStyle(
+                        color: AppColors.deviceBadgeText,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            Text(
+              'Opciones de configuración',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: const Icon(Icons.edit_outlined),
+              title: const Text('Editar nombre'),
+              onTap: () {
+                Navigator.pop(context);
+                // Implementar edición
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.wifi),
+              title: const Text('Configurar red WiFi'),
+              onTap: () {
+                Navigator.pop(context);
+                // Implementar config WiFi
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline, color: Colors.red),
+              title: const Text('Eliminar dispositivo', style: TextStyle(color: Colors.red)),
+              onTap: () {
+                Navigator.pop(context);
+                // Implementar eliminación
+              },
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
   }
 
   void _showAddDeviceDialog() {

@@ -69,6 +69,17 @@ class AppColors {
   static const Color flowIcon = Color(0xFF009EE3);
   static const Color flowBg = Color(0xFFE1F5FE);
   static const Color flowBorder = Color(0xFFB3E5FC);
+
+  // Device Colors
+  static const Color deviceOnline = Color(0xFF84CC16);
+  static const Color deviceOnlineBg = Color(0xFFF0FDF4);
+  static const Color deviceOffline = Color(0xFF9CA3AF); 
+  static const Color deviceOfflineIcon = Color(0xFF9CA3AF);
+  static const Color deviceOfflineBorder = Color(0xFFD1D5DB); 
+  static const Color deviceOfflineBg = Color(0xFFE5E7EB);
+  
+  static const Color deviceBadgeBg = Colors.black;
+  static const Color deviceBadgeText = Colors.white;
 }
 
 class AppTheme {
