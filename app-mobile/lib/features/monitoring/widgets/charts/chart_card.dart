@@ -74,6 +74,23 @@ class ChartCard extends StatelessWidget {
             height: 200,
             child: LineChart(
               LineChartData(
+                lineTouchData: LineTouchData(
+                  touchTooltipData: LineTouchTooltipData(
+                    getTooltipColor: (touchedSpot) => Colors.white,
+                    tooltipRoundedRadius: 8,
+                    getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+                      return touchedBarSpots.map((barSpot) {
+                        return LineTooltipItem(
+                          barSpot.y.toStringAsFixed(1),
+                          const TextStyle(
+                            color: Color(0xFF009EE3),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }).toList();
+                    },
+                  ),
+                ),
                 gridData: const FlGridData(show: false),
                 titlesData: const FlTitlesData(show: false),
                 borderData: FlBorderData(show: false),

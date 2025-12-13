@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 enum TimeRange {
   day24h('Hace 24 horas'),
-  days7('Hace 7 días'),
-  days30('Hace 30 días');
+  days7('7 días'),
+  days30('30 días');
 
   final String label;
   const TimeRange(this.label);
