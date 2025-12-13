@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:aurix/core/config/theme.dart';
 import '../models/alert.dart';
 import '../models/sensor_reading.dart';
-import '../widgets/dashboard/alert_card.dart';
-import '../widgets/filter_selector.dart';
+import '../widgets/alerts/alert_card.dart';
+import '../widgets/alerts/alert_filter_selector.dart';
 
 class AlertsPage extends StatefulWidget {
   const AlertsPage({super.key});
@@ -79,109 +80,179 @@ class _AlertsPageState extends State<AlertsPage> {
     return _alerts.where((alert) => alert.severity == status).toList();
   }
 
+  Map<String, int> get _filterCounts {
+    return {
+      'Todos': _alerts.length,
+      'Crítico': _alerts.where((a) => a.severity == SensorStatus.critical).length,
+      'Precaución': _alerts.where((a) => a.severity == SensorStatus.warning).length,
+      'Normal': _alerts.where((a) => a.severity == SensorStatus.good).length,
+    };
+  }
+
+  void _markAllAsRead() {
+    setState(() {
+      _alerts = _alerts.map((alert) {
+        return Alert(
+          id: alert.id,
+          sensorName: alert.sensorName,
+          message: alert.message,
+          severity: alert.severity,
+          timestamp: alert.timestamp,
+          value: alert.value,
+          unit: alert.unit,
+          isRead: true,
+        );
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final unreadCount = _alerts.where((a) => !a.isRead).length;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Historial de Alertas'),
-        actions: [
-          if (unreadCount > 0)
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 48, 16, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Notificaciones',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Historial de eventos y alertas',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Bell Icon with notification dot
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Stack(
+                          children: [
+                            const Center(
+                              child: Icon(
+                                Icons.notifications_outlined,
+                                color: Colors.black,
+                                size: 24,
+                              ),
+                            ),
+                            if (unreadCount > 0)
+                              Positioned(
+                                top: 12,
+                                right: 12,
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    '$unreadCount nuevas',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                ],
               ),
             ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Filtros
-          FilterSelector(
-            filters: const ['Todos', 'Crítico', 'Precaución', 'Normal'],
-            selectedFilter: _filterStatus,
-            onFilterSelected: (newStatus) {
-              setState(() {
-                _filterStatus = newStatus;
-              });
-            },
-          ),
 
-          // Lista de alertas
-          Expanded(
-            child: _filteredAlerts.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.notifications_off,
-                          size: 64,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'No hay alertas',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey[600],
+            // Filtros
+            AlertFilterSelector(
+              filters: const ['Todos', 'Crítico', 'Precaución', 'Normal'],
+              selectedFilter: _filterStatus,
+              onFilterSelected: (newStatus) {
+                setState(() {
+                  _filterStatus = newStatus;
+                });
+              },
+              counts: _filterCounts,
+            ),
+
+            // Lista de alertas
+            Expanded(
+              child: _filteredAlerts.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.notifications_off_outlined,
+                            size: 64,
+                            color: Colors.grey[300],
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 16),
+                          Text(
+                            'No hay alertas',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey[500],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: _filteredAlerts.length,
+                      itemBuilder: (context, index) {
+                        final alert = _filteredAlerts[index];
+                        return AlertCard(
+                          alert: alert,
+                          onTap: () => _showAlertDetail(alert),
+                        );
+                      },
                     ),
-                  )
-                : ListView.builder(
-                    itemCount: _filteredAlerts.length,
-                    itemBuilder: (context, index) {
-                      final alert = _filteredAlerts[index];
-                      return AlertCard(
-                        alert: alert,
-                        onTap: () => _showAlertDetail(alert),
-                      );
-                    },
-                  ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: unreadCount > 0
           ? FloatingActionButton.extended(
-              onPressed: () {
-                setState(() {
-                  _alerts = _alerts.map((alert) {
-                    return Alert(
-                      id: alert.id,
-                      sensorName: alert.sensorName,
-                      message: alert.message,
-                      severity: alert.severity,
-                      timestamp: alert.timestamp,
-                      value: alert.value,
-                      unit: alert.unit,
-                      isRead: true,
-                    );
-                  }).toList();
-                });
-              },
+              onPressed: _markAllAsRead,
               icon: const Icon(Icons.done_all),
-              label: const Text('Marcar todo como leído'),
+              label: const Text(
+                'Marcar todo como leído',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.white,
+              foregroundColor: AppColors.primary,
+              elevation: 0,
+              highlightElevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: const BorderSide(color: AppColors.primary, width: 2),
+              ),
             )
           : null,
     );
