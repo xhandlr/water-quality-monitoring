@@ -41,7 +41,7 @@ class LoadingIndicator extends StatelessWidget {
 
     if (fullScreen) {
       return Container(
-        color: Colors.black.withValues(alpha: 0.5),
+        color: Colors.black.withOpacity(0.5),
         child: Center(child: indicator),
       );
     }

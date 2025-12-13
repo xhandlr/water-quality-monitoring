@@ -164,7 +164,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.gradientMiddle.withValues(alpha: 0.3),
+                            color: AppColors.gradientMiddle.withOpacity(0.3),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),
@@ -221,7 +221,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               Container(
                                 height: 40,
                                 width: 1,
-                                color: AppColors.white.withValues(alpha: 0.1),
+                                color: AppColors.white.withOpacity(0.1),
                               ),
                               _buildStatusIndicator(
                                 'ALERTA',
@@ -233,7 +233,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               Container(
                                 height: 40,
                                 width: 1,
-                                color: AppColors.white.withValues(alpha: 0.1),
+                                color: AppColors.white.withOpacity(0.1),
                               ),
                               _buildStatusIndicator(
                                 'CRITICO',
@@ -323,7 +323,7 @@ class _DashboardPageState extends State<DashboardPage> {
           label,
           style: TextStyle(
             fontSize: 10,
-            color: AppColors.white.withValues(alpha: 0.7),
+            color: AppColors.white.withOpacity(0.7),
             fontWeight: FontWeight.w500,
           ),
         ),

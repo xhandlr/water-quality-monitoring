@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:aurix/core/config/theme.dart';
 import 'package:aurix/features/auth/pages/splash_screen.dart';
 import 'package:aurix/features/auth/pages/login_page.dart';
@@ -8,6 +9,8 @@ import 'package:aurix/features/monitoring/pages/sensor_detail_page.dart';
 import 'package:aurix/features/monitoring/models/sensor_reading.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(const MyApp());
 }
 
