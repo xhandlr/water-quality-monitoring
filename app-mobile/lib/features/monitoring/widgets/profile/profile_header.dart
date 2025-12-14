@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -9,16 +10,35 @@ class ProfileHeader extends StatelessWidget {
       children: [
         // Top Bar
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Mi Perfil',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              // Logo Aurix
+              Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Image.asset(
+                  'assets/icon/aurix_icon.png',
+                  width: 32,
+                  height: 32,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.water_drop,
+                      size: 26,
+                      color: Colors.white,
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'Mi Perfil',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                    fontSize: 28,
+
+                  )
                 ),
               ),
               Container(
@@ -60,20 +80,19 @@ class ProfileHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           'Usuario Demo',
-          style: TextStyle(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: Colors.white,
-            fontSize: 20,
             fontWeight: FontWeight.w800,
           ),
         ),
         const SizedBox(height: 4),
-        const Text(
+        Text(
           'Administrador de Campo',
-          style: TextStyle(
+          style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: 14,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ],

@@ -120,26 +120,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                               ],
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.white,
-                                  width: 2,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.shadow,
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: const CircleAvatar(
-                                radius: 24,
-                                backgroundColor: Colors.grey,
-                                child: Icon(Icons.person, color: AppColors.white),
-                              ),
+                            // Logo Aurix
+                            Image.asset(
+                              'assets/icon/aurix_icon.png',
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(
+                                  Icons.water_drop,
+                                  size: 32,
+                                  color: AppColors.primary,
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -164,7 +157,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.gradientMiddle.withOpacity(0.3),
+                            color: AppColors.gradientMiddle.withValues(alpha: 0.3),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),
@@ -221,7 +214,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               Container(
                                 height: 40,
                                 width: 1,
-                                color: AppColors.white.withOpacity(0.1),
+                                color: AppColors.white.withValues(alpha: 0.1),
                               ),
                               _buildStatusIndicator(
                                 'ALERTA',
@@ -233,7 +226,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               Container(
                                 height: 40,
                                 width: 1,
-                                color: AppColors.white.withOpacity(0.1),
+                                color: AppColors.white.withValues(alpha: 0.1),
                               ),
                               _buildStatusIndicator(
                                 'CRITICO',
@@ -323,7 +316,7 @@ class _DashboardPageState extends State<DashboardPage> {
           label,
           style: TextStyle(
             fontSize: 10,
-            color: AppColors.white.withOpacity(0.7),
+            color: AppColors.white.withValues(alpha: 0.7),
             fontWeight: FontWeight.w500,
           ),
         ),

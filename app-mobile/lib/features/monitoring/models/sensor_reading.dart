@@ -15,6 +15,17 @@ enum SensorStatus {
         return const Color(0xFFF44336); // Rojo
     }
   }
+
+  String get label {
+    switch (this) {
+      case SensorStatus.good:
+        return 'Normal';
+      case SensorStatus.warning:
+        return 'Precaución';
+      case SensorStatus.critical:
+        return 'Crítico';
+    }
+  }
 }
 
 class SensorReading {

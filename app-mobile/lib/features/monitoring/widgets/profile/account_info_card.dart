@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:aurix/core/config/theme.dart';
+
 
 class AccountInfoCard extends StatelessWidget {
   const AccountInfoCard({super.key});
@@ -19,16 +21,16 @@ class AccountInfoCard extends StatelessWidget {
             const Text(
               'INFORMACIÓN DE LA CUENTA',
               style: TextStyle(
-                color: Color(0xFF009EE3),
+                color: AppColors.accent,
                 fontWeight: FontWeight.w800,
                 fontSize: 14,
               ),
             ),
-            const SizedBox(height: 24),
-            _buildInfoItem(Icons.business, 'ORGANIZACIÓN', 'Planta de tratamiento Principal'),
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
+            _buildInfoItem(Icons.business, 'ORGANIZACIÓN', 'Planta de Tratamiento Principal'),
+            const SizedBox(height: 32),
             _buildInfoItem(Icons.phone_outlined, 'TELÉFONO', '+51 987 654 321'),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             _buildInfoItem(Icons.email_outlined, 'CORREO ELECTRÓNICO', 'usuario@demo.com'),
           ],
         ),
@@ -45,7 +47,7 @@ class AccountInfoCard extends StatelessWidget {
             color: Color(0xFFEFF6FF),
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: const Color(0xFF009EE3), size: 24),
+          child: Icon(icon, color: AppColors.accent, size: 24),
         ),
         const SizedBox(width: 16),
         Expanded(

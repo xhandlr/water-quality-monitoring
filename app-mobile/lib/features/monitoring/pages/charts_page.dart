@@ -77,12 +77,33 @@ class _ChartsPageState extends State<ChartsPage> {
               // Header
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 48, 16, 24),
-                child: Text(
-                  'Tendencias',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF111827),
-                  ),
+                child: Row(
+                  children: [
+                    // Logo Aurix
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Image.asset(
+                        'assets/icon/aurix_icon.png',
+                        width: 32,
+                        height: 32,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.water_drop,
+                            size: 26,
+                            color: AppColors.primary,
+                          );
+                        },
+                      ),
+                    ),
+                    Text(
+                      'Tendencias',
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF111827),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               

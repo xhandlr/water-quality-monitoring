@@ -4,7 +4,6 @@ import 'package:aurix/core/config/theme.dart';
 import 'package:aurix/features/auth/pages/splash_screen.dart';
 import 'package:aurix/features/auth/pages/login_page.dart';
 import 'package:aurix/features/monitoring/pages/main_navigation.dart';
-import 'package:aurix/features/monitoring/pages/settings_page.dart';
 import 'package:aurix/features/monitoring/pages/sensor_detail_page.dart';
 import 'package:aurix/features/monitoring/models/sensor_reading.dart';
 
@@ -39,10 +38,6 @@ class MyApp extends StatelessWidget {
           case '/dashboard':
             return MaterialPageRoute(
               builder: (context) => const MainNavigation(),
-            );
-          case '/settings':
-            return MaterialPageRoute(
-              builder: (context) => const SettingsPage(),
             );
           case '/sensor-detail':
             final reading = settings.arguments as SensorReading;

@@ -72,11 +72,29 @@ class _DevicesPageState extends State<DevicesPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 48, 16, 24),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Mis dispositivos',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                  // Logo Aurix
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Image.asset(
+                      'assets/icon/aurix_icon.png',
+                      width: 32,
+                      height: 32,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.water_drop,
+                          size: 26,
+                          color: AppColors.primary,
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Mis dispositivos',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
