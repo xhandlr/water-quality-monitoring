@@ -148,7 +148,7 @@ class AlertDetailModal extends StatelessWidget {
                   Text(
                     alert.message,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Color(0xFF4B5563),
                       height: 1.5,
                     ),

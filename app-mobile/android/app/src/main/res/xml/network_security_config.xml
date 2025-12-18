@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Permitir cleartext traffic (tráfico no cifrado) para el broker MQTT -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">broker.hivemq.com</domain>
+    </domain-config>
+
+    <!-- Para desarrollo, puedes habilitar cleartext para todos los dominios
+         (NO RECOMENDADO PARA PRODUCCIÓN) -->
+    <!--
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    -->
+</network-security-config>

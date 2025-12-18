@@ -88,7 +88,7 @@ class SettingsCard extends StatelessWidget {
                   const Text(
                     'Cerrar Sesión',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1F2937),
                     ),
@@ -98,7 +98,8 @@ class SettingsCard extends StatelessWidget {
                     '¿Estás seguro que deseas cerrar sesión en este dispositivo?',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
                       color: Color(0xFF6B7280),
                     ),
                   ),

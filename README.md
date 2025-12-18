@@ -318,37 +318,6 @@ Disponible después de **12 meses de datos históricos**:
 - 
 ---
 
-## 🗺️ Roadmap
-
-### ✅ Fase 1 - Completado
-- [x] Diseño UI/UX completo
-- [x] Dashboard con sistema de semáforo
-- [x] Gráficos de tendencia temporal
-- [x] Sistema de alertas
-- [x] Navegación entre pantallas
-
-### 🚧 Fase 2 - En Desarrollo
-- [ ] Integración con API REST del backend
-- [ ] Almacenamiento local con SQLite
-- [ ] Gestión de estado con Provider/Riverpod
-- [ ] Autenticación JWT
-- [ ] Notificaciones push locales
-
-### 📋 Fase 3 - Planificado
-- [ ] Sincronización en tiempo real (WebSockets)
-- [ ] Modo offline completo
-- [ ] Generación de reportes PDF
-- [ ] Exportación de datos (CSV, Excel)
-- [ ] Multi-dispositivo (varios filtros)
-
-### 🔮 Fase 4 - Futuro
-- [ ] Módulo ML de detección de anomalías
-- [ ] Dashboard web (Flutter Web)
-- [ ] Integración con sensores adicionales
-- [ ] Sistema de suscripción y pagos
-
----
-
 ## 📝 Licencia
 
 ⚠️ **AVISO DE INTEGRIDAD ACADÉMICA**

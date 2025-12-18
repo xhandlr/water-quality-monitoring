@@ -36,8 +36,6 @@ class ProfileHeader extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
-                    fontSize: 28,
-
                   )
                 ),
               ),

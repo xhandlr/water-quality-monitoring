@@ -96,13 +96,13 @@ class SensorTrendChart extends StatelessWidget {
                         verticalInterval: 1,
                         getDrawingHorizontalLine: (value) {
                           return FlLine(
-                            color: Colors.grey.withValues(alpha: 0.2),
+                            color: Colors.grey.withOpacity(0.2),
                             strokeWidth: 1,
                           );
                         },
                         getDrawingVerticalLine: (value) {
                           return FlLine(
-                            color: Colors.grey.withValues(alpha: 0.2),
+                            color: Colors.grey.withOpacity(0.2),
                             strokeWidth: 1,
                           );
                         },
@@ -158,7 +158,7 @@ class SensorTrendChart extends StatelessWidget {
                       borderData: FlBorderData(
                         show: true,
                         border: Border.all(
-                          color: Colors.grey.withValues(alpha: 0.2),
+                          color: Colors.grey.withOpacity(0.2),
                         ),
                       ),
                       minX: 0,
@@ -176,7 +176,7 @@ class SensorTrendChart extends StatelessWidget {
                           gradient: LinearGradient(
                             colors: [
                               Theme.of(context).primaryColor,
-                              Theme.of(context).primaryColor.withValues(alpha: 0.5),
+                              Theme.of(context).primaryColor.withOpacity(0.5),
                             ],
                           ),
                           barWidth: 3,
@@ -188,10 +188,10 @@ class SensorTrendChart extends StatelessWidget {
                               colors: [
                                 Theme.of(context)
                                     .primaryColor
-                                    .withValues(alpha: 0.3),
+                                    .withOpacity(0.3),
                                 Theme.of(context)
                                     .primaryColor
-                                    .withValues(alpha: 0.0),
+                                    .withOpacity(0.0),
                               ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,

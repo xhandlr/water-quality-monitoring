@@ -12,6 +12,58 @@ class SensorCard extends StatelessWidget {
     this.onTap,
   });
 
+  Widget _buildHistoryChart(Color color) {
+    // Si no hay historial, mostrar datos simulados
+    if (reading.history.isEmpty) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: List.generate(12, (index) {
+          final height = 4.0 + (index * index * 37 % 16);
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 1.5),
+              child: Container(
+                height: height,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    }
+
+    // Usar historial real
+    final maxValue = reading.history.reduce((a, b) => a > b ? a : b);
+    final minValue = reading.history.reduce((a, b) => a < b ? a : b);
+    final range = maxValue - minValue;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: reading.history.map((value) {
+        // Normalizar altura entre 4 y 20 pixels
+        final normalizedHeight = range > 0
+            ? 4.0 + ((value - minValue) / range) * 16.0
+            : 12.0;
+
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 1.5),
+            child: Container(
+              height: normalizedHeight,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Definir colores según el estado
@@ -100,7 +152,7 @@ class SensorCard extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: iconColor.withOpacity(0.4),
+                          color: iconColor.withValues(alpha: 0.4),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
@@ -113,25 +165,7 @@ class SensorCard extends StatelessWidget {
               // Gráfico simple de historial
               SizedBox(
                 height: 24,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: List.generate(12, (index) {
-                    // Simulación de datos históricos
-                    final height = 4.0 + (index * index * 37 % 16);
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 1.5),
-                        child: Container(
-                          height: height,
-                          decoration: BoxDecoration(
-                            color: iconColor.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
+                child: _buildHistoryChart(iconColor),
               ),
               const SizedBox(height: 12),
               Text(

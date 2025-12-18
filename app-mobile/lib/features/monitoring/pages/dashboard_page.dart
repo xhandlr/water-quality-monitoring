@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:aurix/core/config/theme.dart';
+import '../../../core/services/mqtt_service.dart';
 import '../models/sensor_reading.dart';
-import '../widgets/dashboard/sensor_card.dart';
+import '../widgets/dashboard/dashboard_header.dart';
+import '../widgets/dashboard/system_status_card.dart';
+import '../widgets/dashboard/sensor_list_section.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -11,18 +14,104 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  // Simulación de datos - en producción vendría de la API
+  final MqttService _mqttService = MqttService();
   List<SensorReading> _sensorReadings = [];
   bool _isLoading = true;
+  StreamSubscription? _mqttSubscription;
+  String _debugStatus = "Iniciando..."; // Variable para ver logs en pantalla
 
   @override
   void initState() {
     super.initState();
-    _loadSensorData();
+    _initializeDashboard();
+  }
+
+  Future<void> _initializeDashboard() async {
+    await _loadSensorData();
+    await _setupMqttConnection();
+  }
+
+  Future<void> _setupMqttConnection() async {
+    try {
+      if (mounted) setState(() => _debugStatus = "Conectando a MQTT...");
+      // IMPORTANTE: Escuchar antes de conectar para capturar mensajes retenidos
+      _listenToMqttData();
+      debugPrint('Iniciando conexión MQTT...');
+      await _mqttService.connect();
+      if (mounted) setState(() => _debugStatus = "Conectado. Esperando datos...");
+      debugPrint('Conexión MQTT establecida correctamente');
+    } catch (e) {
+      if (mounted) setState(() => _debugStatus = "Error conexión: $e");
+      debugPrint('Error conectando a MQTT: $e');
+    }
+  }
+
+  void _listenToMqttData() {
+    _mqttSubscription = _mqttService.dataStream.listen((data) {
+      debugPrint('Datos recibidos MQTT: $data');
+      if (!mounted) return;
+      setState(() {
+        _debugStatus = "Último dato recibido:\n$data";
+      });
+      _updateSensorValues(data);
+    }, onError: (error) {
+      debugPrint('Error en stream MQTT: $error');
+    });
+  }
+
+  void _updateSensorValues(Map<String, dynamic> data) {
+    if (!mounted) return;
+
+    setState(() {
+      _sensorReadings = _sensorReadings.map((sensor) {
+        String? jsonKey = _getJsonKeyForSensor(sensor.name);
+
+        if (jsonKey != null && data.containsKey(jsonKey)) {
+          final double newValue = (data[jsonKey] as num).toDouble();
+          debugPrint('Actualizando sensor ${sensor.name}: $newValue');
+
+          // Actualizar historial
+          List<double> newHistory = List.from(sensor.history);
+          newHistory.add(newValue);
+          if (newHistory.length > 12) newHistory.removeAt(0);
+
+          return SensorReading(
+            id: sensor.id,
+            name: sensor.name,
+            value: newValue,
+            unit: sensor.unit,
+            status: _calculateStatus(newValue, sensor.minThreshold, sensor.maxThreshold),
+            timestamp: DateTime.now(),
+            icon: sensor.icon,
+            minThreshold: sensor.minThreshold,
+            maxThreshold: sensor.maxThreshold,
+            history: newHistory,
+          );
+        }
+        return sensor;
+      }).toList();
+    });
+  }
+
+  String? _getJsonKeyForSensor(String sensorName) {
+    switch (sensorName) {
+      case 'pH': return 'ph';
+      case 'Flujo': return 'flujo';
+      case 'Volumen': return 'volumen';
+      case 'Turbidez': return 'turbidez';
+      case 'Conductividad': return 'conductividad';
+      default: return null;
+    }
+  }
+
+  SensorStatus _calculateStatus(double value, double min, double max) {
+    if (value < min || value > max) {
+      return SensorStatus.warning;
+    }
+    return SensorStatus.good;
   }
 
   Future<void> _loadSensorData() async {
-    // Simular carga de API
     await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
@@ -37,9 +126,22 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icons.science_outlined,
           minThreshold: 6.5,
           maxThreshold: 8.5,
+          history: [7.0, 7.1, 7.2],
         ),
         SensorReading(
-          id: '4',
+          id: '2',
+          name: 'Flujo',
+          value: 0.0,
+          unit: 'L/min',
+          status: SensorStatus.warning,
+          timestamp: DateTime.now(),
+          icon: Icons.waves,
+          minThreshold: 15.0,
+          maxThreshold: 30.0,
+          history: [0.0],
+        ),
+        SensorReading(
+          id: '3',
           name: 'Turbidez',
           value: 45.2,
           unit: 'NTU',
@@ -48,20 +150,10 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icons.water_drop,
           minThreshold: 0,
           maxThreshold: 50,
+          history: [42.0, 43.5, 45.2],
         ),
         SensorReading(
-          id: '2',
-          name: 'Flujo',
-          value: 28.5,
-          unit: 'L/min',
-          status: SensorStatus.warning,
-          timestamp: DateTime.now(),
-          icon: Icons.waves,
-          minThreshold: 15.0,
-          maxThreshold: 30.0,
-        ),
-        SensorReading(
-          id: '5',
+          id: '4',
           name: 'Conductividad',
           value: 520,
           unit: 'µS/cm',
@@ -70,6 +162,7 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icons.bolt,
           minThreshold: 200,
           maxThreshold: 800,
+          history: [510, 515, 520],
         ),
       ];
       _isLoading = false;
@@ -80,18 +173,23 @@ class _DashboardPageState extends State<DashboardPage> {
     await _loadSensorData();
   }
 
+  void _navigateToSensorDetail(SensorReading reading) {
+    Navigator.pushNamed(
+      context,
+      '/sensor-detail',
+      arguments: reading,
+    );
+  }
+
+  @override
+  void dispose() {
+    _mqttSubscription?.cancel();
+    _mqttService.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final criticalCount = _sensorReadings
-        .where((r) => r.status == SensorStatus.critical)
-        .length;
-    final warningCount = _sensorReadings
-        .where((r) => r.status == SensorStatus.warning)
-        .length;
-    final goodCount = _sensorReadings
-        .where((r) => r.status == SensorStatus.good)
-        .length;
-
     return Scaffold(
       body: SafeArea(
         child: _isLoading
@@ -100,227 +198,36 @@ class _DashboardPageState extends State<DashboardPage> {
                 onRefresh: _refreshData,
                 child: CustomScrollView(
                   slivers: [
+                    const SliverToBoxAdapter(
+                      child: DashboardHeader(),
+                    ),
+                    SliverToBoxAdapter(
+                      child: SystemStatusCard(readings: _sensorReadings),
+                    ),
+                    SliverToBoxAdapter(
+                      child: SensorListSection(
+                        readings: _sensorReadings,
+                        onSensorTap: _navigateToSensorDetail,
+                      ),
+                    ),
+                    // Sección de Debug para ver los datos en el APK sin consola
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 48, 16, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Bienvenido de nuevo,',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Dashboard',
-                                  style: Theme.of(context).textTheme.headlineMedium,
-                                ),
-                              ],
-                            ),
-                            // Logo Aurix
-                            Image.asset(
-                              'assets/icon/aurix_icon.png',
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Icon(
-                                  Icons.water_drop,
-                                  size: 32,
-                                  color: AppColors.primary,
-                                );
-                              },
-                            ),
-                          ],
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.black12,
+                          child: Text(
+                            'DEBUG LOG:\n$_debugStatus',
+                            style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                          ),
                         ),
                       ),
                     ),
-                  // Header con resumen de estado
-                  SliverToBoxAdapter(
-                    child: Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            AppColors.gradientStart,
-                            AppColors.gradientMiddle,
-                            AppColors.gradientEnd,
-                          ],
-                          stops: [0.0, 0.5, 1.0],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.gradientMiddle.withValues(alpha: 0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Estado del Sistema',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.tagBackground,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: AppColors.tagBorder,
-                                  ),
-                                ),
-                                child: const Text(
-                                  'Tiempo real',
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _buildStatusIndicator(
-                                'NORMAL',
-                                goodCount,
-                                AppColors.statusNormalIcon,
-                                AppColors.statusNormalDashboardBg,
-                                Icons.check_circle_outline,
-                              ),
-                              Container(
-                                height: 40,
-                                width: 1,
-                                color: AppColors.white.withValues(alpha: 0.1),
-                              ),
-                              _buildStatusIndicator(
-                                'ALERTA',
-                                warningCount,
-                                AppColors.statusWarningIcon,
-                                AppColors.statusWarningDashboardBg,
-                                Icons.warning_amber_rounded,
-                              ),
-                              Container(
-                                height: 40,
-                                width: 1,
-                                color: AppColors.white.withValues(alpha: 0.1),
-                              ),
-                              _buildStatusIndicator(
-                                'CRITICO',
-                                criticalCount,
-                                AppColors.statusCriticalIcon,
-                                AppColors.statusCriticalDashboardBg,
-                                Icons.error_outline,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Grid de tarjetas de sensores
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: Text(
-                        'Métricas en tiempo real',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(16),
-                    sliver: SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.85,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final reading = _sensorReadings[index];
-                          return SensorCard(
-                            reading: reading,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/sensor-detail',
-                                arguments: reading,
-                              );
-                            },
-                          );
-                        },
-                        childCount: _sensorReadings.length,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
       ),
-    );
-  }
-
-  Widget _buildStatusIndicator(
-    String label,
-    int count,
-    Color iconColor,
-    Color backgroundColor,
-    IconData icon,
-  ) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: iconColor, size: 24),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          count.toString(),
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.white,
-          ),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
-            color: AppColors.white.withValues(alpha: 0.7),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
     );
   }
 }

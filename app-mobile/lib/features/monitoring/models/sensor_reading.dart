@@ -38,6 +38,7 @@ class SensorReading {
   final IconData icon;
   final double minThreshold;
   final double maxThreshold;
+  final List<double> history;
 
   const SensorReading({
     required this.id,
@@ -49,6 +50,7 @@ class SensorReading {
     required this.icon,
     required this.minThreshold,
     required this.maxThreshold,
+    this.history = const [],
   });
 
   String get formattedValue => '${value.toStringAsFixed(2)} $unit';
