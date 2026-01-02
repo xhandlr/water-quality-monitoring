@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import '../../../core/services/mqtt_service.dart';
 import '../models/sensor_reading.dart';
 import '../widgets/dashboard/dashboard_header.dart';
 import '../widgets/dashboard/system_status_card.dart';
 import '../widgets/dashboard/sensor_list_section.dart';
-import '../widgets/dashboard/sensor_trend_chart.dart';
-import '../widgets/time_range_selector.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -76,7 +73,7 @@ class _DashboardPageState extends State<DashboardPage> {
             name: sensor.name,
             value: newValue,
             unit: sensor.unit,
-            status: _calculateStatus(newValue, sensor.minThreshold, sensor.maxThreshold),
+            status: sensor.status,
             timestamp: DateTime.now(),
             icon: sensor.icon,
             minThreshold: sensor.minThreshold,
@@ -98,13 +95,6 @@ class _DashboardPageState extends State<DashboardPage> {
       case 'Conductividad': return 'conductividad';
       default: return null;
     }
-  }
-
-  SensorStatus _calculateStatus(double value, double min, double max) {
-    if (value < min || value > max) {
-      return SensorStatus.warning;
-    }
-    return SensorStatus.good;
   }
 
   Future<void> _loadSensorData() async {
@@ -200,24 +190,6 @@ class _DashboardPageState extends State<DashboardPage> {
                     SliverToBoxAdapter(
                       child: SystemStatusCard(readings: _sensorReadings),
                     ),
-                    if (_sensorReadings.isNotEmpty)
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: 380,
-                          child: SensorTrendChart(
-                            sensorName: 'Tendencia pH',
-                            unit: 'pH',
-                            selectedRange: TimeRange.day24h,
-                            dataPoints: _sensorReadings
-                                .firstWhere((s) => s.name == 'pH')
-                                .history
-                                .asMap()
-                                .entries
-                                .map((e) => FlSpot(e.key.toDouble(), e.value))
-                                .toList(),
-                          ),
-                        ),
-                      ),
                     SliverToBoxAdapter(
                       child: SensorListSection(
                         readings: _sensorReadings,

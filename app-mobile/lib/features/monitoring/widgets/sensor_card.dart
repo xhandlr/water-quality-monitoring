@@ -70,9 +70,8 @@ class SensorCard extends StatelessWidget {
     Color iconColor;
     Color iconBgColor;
     Color iconBorderColor;
-
-    // Override para Turbidez si es crítico
-    if (reading.name == 'Turbidez' && reading.status == SensorStatus.critical) {
+    
+    if (reading.name == 'Turbidez') {
       iconColor = AppColors.turbidezCritical;
       iconBgColor = AppColors.statusCriticalBg;
       iconBorderColor = AppColors.statusCriticalBorder;
