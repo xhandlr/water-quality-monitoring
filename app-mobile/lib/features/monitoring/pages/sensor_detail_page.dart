@@ -52,6 +52,8 @@ class _SensorDetailPageState extends State<SensorDetailPage> {
       if (_currentReading.name == 'Flujo') jsonKey = 'flujo';
       if (_currentReading.name == 'pH') jsonKey = 'ph';
       if (_currentReading.name == 'Volumen') jsonKey = 'volumen';
+      if (_currentReading.name == 'Turbidez') jsonKey = 'turbidez';
+      if (_currentReading.name == 'Conductividad') jsonKey = 'conductividad';
 
       if (jsonKey != null && data.containsKey(jsonKey)) {
         final double newValue = (data[jsonKey] as num).toDouble();

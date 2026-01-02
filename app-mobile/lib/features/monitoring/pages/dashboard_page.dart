@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import '../../../core/services/mqtt_service.dart';
 import '../models/sensor_reading.dart';
 import '../widgets/dashboard/dashboard_header.dart';
 import '../widgets/dashboard/system_status_card.dart';
 import '../widgets/dashboard/sensor_list_section.dart';
+import '../widgets/dashboard/sensor_trend_chart.dart';
+import '../widgets/time_range_selector.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -18,7 +21,6 @@ class _DashboardPageState extends State<DashboardPage> {
   List<SensorReading> _sensorReadings = [];
   bool _isLoading = true;
   StreamSubscription? _mqttSubscription;
-  String _debugStatus = "Iniciando..."; // Variable para ver logs en pantalla
 
   @override
   void initState() {
@@ -33,15 +35,12 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _setupMqttConnection() async {
     try {
-      if (mounted) setState(() => _debugStatus = "Conectando a MQTT...");
       // IMPORTANTE: Escuchar antes de conectar para capturar mensajes retenidos
       _listenToMqttData();
       debugPrint('Iniciando conexión MQTT...');
       await _mqttService.connect();
-      if (mounted) setState(() => _debugStatus = "Conectado. Esperando datos...");
       debugPrint('Conexión MQTT establecida correctamente');
     } catch (e) {
-      if (mounted) setState(() => _debugStatus = "Error conexión: $e");
       debugPrint('Error conectando a MQTT: $e');
     }
   }
@@ -50,9 +49,6 @@ class _DashboardPageState extends State<DashboardPage> {
     _mqttSubscription = _mqttService.dataStream.listen((data) {
       debugPrint('Datos recibidos MQTT: $data');
       if (!mounted) return;
-      setState(() {
-        _debugStatus = "Último dato recibido:\n$data";
-      });
       _updateSensorValues(data);
     }, onError: (error) {
       debugPrint('Error en stream MQTT: $error');
@@ -204,24 +200,28 @@ class _DashboardPageState extends State<DashboardPage> {
                     SliverToBoxAdapter(
                       child: SystemStatusCard(readings: _sensorReadings),
                     ),
+                    if (_sensorReadings.isNotEmpty)
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 380,
+                          child: SensorTrendChart(
+                            sensorName: 'Tendencia pH',
+                            unit: 'pH',
+                            selectedRange: TimeRange.day24h,
+                            dataPoints: _sensorReadings
+                                .firstWhere((s) => s.name == 'pH')
+                                .history
+                                .asMap()
+                                .entries
+                                .map((e) => FlSpot(e.key.toDouble(), e.value))
+                                .toList(),
+                          ),
+                        ),
+                      ),
                     SliverToBoxAdapter(
                       child: SensorListSection(
                         readings: _sensorReadings,
                         onSensorTap: _navigateToSensorDetail,
-                      ),
-                    ),
-                    // Sección de Debug para ver los datos en el APK sin consola
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.black12,
-                          child: Text(
-                            'DEBUG LOG:\n$_debugStatus',
-                            style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-                          ),
-                        ),
                       ),
                     ),
                   ],

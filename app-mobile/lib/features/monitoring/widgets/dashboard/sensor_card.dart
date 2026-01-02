@@ -110,14 +110,21 @@ class SensorCard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              // Gráfico simple de historial
+              // Gráfico simple de historial (Sparkline real)
               SizedBox(
                 height: 24,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: List.generate(12, (index) {
-                    // Simulación de datos históricos
-                    final height = 4.0 + (index * index * 37 % 16);
+                    // Usar datos reales del historial si existen
+                    double height = 4.0;
+                    if (reading.history.length > index) {
+                      // Normalizar el valor para la altura (ej. entre 4 y 24)
+                      final val = reading.history[index];
+                      // Simple normalización basada en umbrales o valores conocidos
+                      height = 4.0 + ((val % 20) / 20 * 20); 
+                    }
+                    
                     return Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 1.5),
